@@ -1,9 +1,22 @@
 $(document).ready(function() {
   $('#add-new').click(function() {
-    let lastIndex = $('#investments tr:last').index();
-    $('#investments tr:last').after(getRowScope(lastIndex+1))
+    const rowLength = $('#investments tbody tr').length;
+
+    if (rowLength === 0) {
+      $('#investments tbody').append(getRowScope(1));
+      return;
+    }
+
+    const lastIndex = $('#investments tbody tr:last').attr('id').split('-')[1];
+
+    $('#investments tbody tr:last').after(getRowScope(Number(lastIndex)+1));
   });
 });
+
+function selectedRow(elem) {
+  $('#investments tr').removeClass('active')
+  $(`#${elem.id}`).addClass('active');
+}
 
 function deleteAction(elem) {
   let id = elem.id.split('-')[1];
@@ -12,7 +25,7 @@ function deleteAction(elem) {
 
 function getRowScope(index) {
   return `
-  <tr id="row-${index}">
+  <tr id="row-${index}" onClick="selectedRow(this);">
     <td>
       <img src="images/aplicacao.png" alt="">
     </td>

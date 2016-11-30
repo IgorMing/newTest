@@ -2,6 +2,39 @@
   vertical-align: middle;
 }
 
+.active {
+  background: lightblue;
+}
+
 img {
   cursor: pointer;
+}
+
+thead {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
+thead > tr > th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.padding-top-bottom-md {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.btn-add {
+  background: transparent;
+  width: 100%;
+  border: none;
+  border-top: 2px solid lightgrey;
+  border-bottom: 3px solid lightgrey;
+  color: blue;
+  font-size: 16px;
+}
+
+.btn-add:hover {
+  background: lightblue;
 }
