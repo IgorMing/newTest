@@ -1,17 +1,38 @@
 $(document).ready(function() {
-  $('#add-new').click(function() {
-    const rowLength = $('#investments tbody tr').length;
-
-    if (rowLength === 0) {
-      $('#investments tbody').append(getRowScope(1));
-      return;
-    }
-
-    const lastIndex = $('#investments tbody tr:last').attr('id').split('-')[1];
-
-    $('#investments tbody tr:last').after(getRowScope(Number(lastIndex)+1));
+  $('#add-new').click(function(e) {
+    e.preventDefault();
+    addNew();
   });
+
+  fetchInvestments();
 });
+
+function fetchInvestments() {
+  $.ajax({
+    method: 'GET',
+    dataType: 'json',
+    url: 'https://magnetis-trades.herokuapp.com/trades.json',
+    success: function(response) {
+      $.each(response, function(i, value) {
+        console.log(i, value);
+        addNew()
+      })
+    }
+  })
+}
+
+function addNew() {
+  const rowLength = $('#investments tbody tr').length;
+
+  if (rowLength === 0) {
+    $('#investments tbody').append(getRowScope(1));
+    return;
+  }
+
+  const lastIndex = $('#investments tbody tr:last').attr('id').split('-')[1];
+
+  $('#investments tbody tr:last').after(getRowScope(Number(lastIndex)+1));
+}
 
 function selectedRow(elem) {
   $('#investments tr').removeClass('active')
