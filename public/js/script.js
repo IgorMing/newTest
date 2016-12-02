@@ -11,18 +11,41 @@ $(document).ready(function() {
     e.preventDefault();
 
     $('#form-investments tr').each(function(i, v) {
-      console.log(i, v);
+      if($(v).attr('isnew') === 'true') {
+        const rowId = v.id;
+
+        const date = $(`#${rowId} .date`).val();
+        const kind = $(`#${rowId} select`).val();
+        const shares = $(`#${rowId} .shares`).val();
+
+        postInvestment(date, kind, shares);
+      }
     })
   })
 
   fetchInvestments();
 });
 
-function getPrice(date, fund_id, success) {
-  // if (typeof(date) === 'object'){
-  //   console.log(date);
-  // }
+function postInvestment(date, kind, shares) {
+  $.ajax({
+   dataType: 'json',
+   type: 'POST',
+   url: `${BASE_URL}/trades.json`,
+   data: {
+     'trade': {
+       'date': date,
+       'kind': kind,
+       'shares': shares,
+       'fund_id': 1,
+     },
+   },
+   success: function() {
+     alert('saved successfully!');
+   }
+ });
+}
 
+function getPrice(date, fund_id, success) {
   let splittedDate = date.split('/');
   if (splittedDate.length === 3) {
     date = `${splittedDate[2]}-${splittedDate[1]}-${splittedDate[0]}`;
@@ -94,7 +117,6 @@ function addNew(elem, isNew) {
         return;
       }
 
-      console.log(response.price);
       $(`#${indexToAdd} .price`).val(response.price )
     })
   })
@@ -150,7 +172,7 @@ function getRowScope(index, elem, isNew) {
       </select>
     </td>
     <td>
-      <input class="form-control" onkeyup="calcKeyup(this, ${price});" type="number" value=${shares || 0}>
+      <input class="form-control shares" onkeyup="calcKeyup(this, ${price});" type="number" value=${shares || 0}>
     </td>
     <td>
       <input id="price-${index}" class="form-control price" type="text" value=${price} disabled>

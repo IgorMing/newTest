@@ -31,10 +31,25 @@ thead > tr > th {
   border: none;
   border-top: 2px solid lightgrey;
   border-bottom: 3px solid lightgrey;
-  color: blue;
+  color: #28c9d1;
   font-size: 16px;
 }
 
 .btn-add:hover {
   background: lightblue;
+  color: white;
+}
+
+.btn-save {
+  background-color: #7bbf28;
+  padding: 15px 30px;
+  border-radius: 8px;
+  border: 1px solid grey;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: none;
 }
